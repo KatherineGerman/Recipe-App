@@ -1,6 +1,7 @@
 
 
 const meals = document.getElementById('meals');
+const favoriteContainer = document.getElementById("fav-meal");
 
 getRandomMeal();
 fecthFavMeals();
@@ -78,6 +79,9 @@ function addMeal(mealData, random = false) {
         btn.classList.add("active");
        }
 
+       //clen the container
+       favoriteContainer.innerHTML = '';
+       fecthFavMeals();
         //btn.classList.toggle("active");
     });
 
@@ -112,18 +116,38 @@ function getMealsLS() {
 
         return mealIds === null ? [] : mealIds;
 }
+
 async function fecthFavMeals() {
     const mealIds = getMealsLS();
 
-    const mealId = [];
-
-    for(let i=0; i<mealIds.getElementById; i++) {
+    for(let i=0; i<mealIds.length; i++) {
         const mealId = mealIds[i];
 
         meal = await getMealById(mealId);
-        meals.push(meal);
+
+        addMealFav(meal);
+        
 
     }
-    console.log(meals);
+    
 
 }
+
+function addMealFav(mealData) {
+
+    const favMeal = document.createElement("li");
+    
+
+    favMeal.innerHTML = `
+    
+    <img 
+    src="${mealData.strMealThumb}"
+     alt="${mealData.strMeal}"
+     /><span>${mealData.strMeal}</span>
+    
+
+    `;
+
+    favoriteContainer.appendChild(favMeal);
+
+} 
